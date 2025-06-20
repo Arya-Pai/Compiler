@@ -75,9 +75,9 @@ detectAndSetLanguage();
 
 
 document.getElementById("compileForm").addEventListener("submit", function () {
-    document.getElementById('codeHidden').value = editor.getValue();
+	document.getElementById('codeHidden').value = editor.getValue();
+	    document.getElementById('languageSelectHidden').value = document.getElementById("languageSelect").value;
+	    document.getElementById('codeInputHidden').value = document.getElementById("inputText").value;
 });
 
-document.getElementById("transpileForm").addEventListener("submit", function () {
-    document.getElementById('codeHiddenTranspile').value = editor.getValue();
-});
+

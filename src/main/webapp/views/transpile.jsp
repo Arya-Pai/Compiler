@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Code Compiler</title>
+<title>Code Transpiler</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.10/codemirror.min.css" />
 <link rel="stylesheet"
@@ -16,7 +16,7 @@
 	rel="stylesheet">
 
 
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/transpile.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 <script
@@ -40,14 +40,15 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
 
-
 </head>
 <body>
-	<h1>Code Compiler</h1>
+	<h1>Code Transpiler</h1>
+	
 	<nav>
   <a href="/">Compiler</a> |
   <a href="/transpile">Transpiler</a>
 </nav>
+	
 
 	<div class="container">
 		<div id="controls">
@@ -62,45 +63,47 @@
 					<option value="javascript">JavaScript</option>
 				</select>
 			</div>
-			
-			
+			<div class="language-controls">
+				<label for="targetLanguageSelect">Target:</label> <select
+					id="targetLanguageSelect">
+					<option value="python">Python</option>
+					<option value="text/x-java">Java</option>
+					<option value="text/x-csrc">C</option>
+					<option value="text/x-c++src">C++</option>
+					<option value="javascript">JavaScript</option>
+				</select>
+			</div>
 
 		</div>
 		<div id="form">
 			<div class="controls">
-				<form id="compileForm" action="/api/compile" method="post"
-					style="display: inline;">
-					<input type="hidden" id="codeHidden" name="code" /> <input
-						type="hidden" id="languageSelectHidden" name="languageSelect" />
-					<input type="hidden" id="codeInputHidden" name="input" />
-
-					<button type="submit">Compile</button>
-				</form>
-			</div>
+				<div class="controls">
+					<form id="transpileForm" action="/api/transpile" method="post"
+						style="display: inline;">
+						<input type="hidden" id="codeHiddenTranspile" name="code" />
+						<button type="submit" id="transpileBtn">Transpile</button>
+					</form>
+				</div>
 
 
 
 
-			<div id="formatContainers">
-				<div id="editorContainer">
-					<div id="editor">
-						<textarea id="code" cols="40">// write your code here add even the libraries</textarea>
+
+				<div id="formatContainers">
+					<div id="editorContainer">
+						<div id="editor">
+							<textarea id="code" cols="40">// write your code here add even the libraries</textarea>
+						</div>
+					</div>
+					<div id="outputContainer">
+						<div id="outputTerminal">// output will show here</div>
 					</div>
 				</div>
-				<div id="outputContainer">
-					<div id="outputTerminal">// output will show here</div>
-				</div>
-			</div>
-			<div id="inputContainer">
-				<label for="inputText">Custom Input:</label><br>
-				<textarea id="inputText" rows="10" cols="50"
-					placeholder="Enter input here (if your code uses scanf, cin, or input())"></textarea>
 			</div>
 		</div>
-	</div>
+		
+</div>
 
-
-	<script src="/scripts/index.js"></script>
 
 </body>
 </html>

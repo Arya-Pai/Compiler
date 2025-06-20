@@ -9,4 +9,8 @@ public class HomeController {
 	public String home() {
 		return "index";
 	}
+	@GetMapping("/transpile")
+	public String transpile() {
+		return "transpile";
+	}
 }
