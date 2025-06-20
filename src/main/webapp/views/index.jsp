@@ -55,11 +55,11 @@
 			<div class="language-controls">
 				<label for="languageSelect">Current:</label> <select
 					id="languageSelect" disabled>
-					<option value="python">Python</option>
-					<option value="text/x-java">Java</option>
-					<option value="text/x-c++src">C++</option>
-					<option value="text/x-csrc">C</option>
-					<option value="javascript">JavaScript</option>
+					 <option value="java">Java</option>
+  <option value="python3">Python 3</option>
+  <option value="cpp">C++</option>
+  <option value="c">C</option>
+  <option value="nodejs">Node.js</option>
 				</select>
 			</div>
 			

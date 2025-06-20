@@ -28,6 +28,8 @@ public class CodeController {
         RestTemplate restTemplate = new RestTemplate();
         String[] keys=secretKey();
         String url = "https://api.jdoodle.com/v1/execute";
+        System.out.println("Code: " + code);
+        System.out.println("Language: " + languageSelect);
 
         Map<String, Object> request = new HashMap<>();
         request.put("clientId", keys[0]);
@@ -36,7 +38,7 @@ public class CodeController {
         request.put("language", languageSelect);
         Map<String, String> versionMap = Map.of(
         		  "python3", "3",
-        		  "java", "3",
+        		  "java", "5",
         		  "cpp", "0",
         		  "c", "0",
         		  "nodejs", "3"
@@ -50,7 +52,18 @@ public class CodeController {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(request, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(url, entity, String.class);
-
+        String responseBody=response.getBody();
+        String output="No output found";
+        
+        if(responseBody!=null && responseBody.contains("\"output\"")){
+        	int start=responseBody.indexOf("\"output\"")+10;
+        	int end=responseBody.indexOf("\",", start);
+        	if(end==-1) {
+        		 end = responseBody.indexOf("\"}", start);
+        	}
+        	output=responseBody.substring(start,end).replace("\\n","\n").replace("\\t", "\t");
+        }
+        System.out.println("Output from Compiler:\n" + output);
         return ResponseEntity.ok(response.getBody());
     }
 }
