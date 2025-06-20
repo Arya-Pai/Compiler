@@ -16,7 +16,7 @@
 	rel="stylesheet">
 
 
-<link rel="stylesheet" href="/css/transpile.css">
+<link rel="stylesheet" href="/css/style.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
 <script
@@ -51,7 +51,7 @@
 	
 
 	<div class="container">
-		<div id="controls">
+		<div id="controls_t">
 
 			<div class="language-controls">
 				<label for="languageSelect">Current:</label> <select
@@ -76,8 +76,8 @@
 
 		</div>
 		<div id="form">
-			<div class="controls">
-				<div class="controls">
+			<div class="controls_t">
+				<div class="controls_t">
 					<form id="transpileForm" action="/api/transpile" method="post"
 						style="display: inline;">
 						<input type="hidden" id="codeHiddenTranspile" name="code" />
@@ -104,6 +104,7 @@
 		
 </div>
 
+	<script src="/scripts/index.js"></script>
 
 </body>
 </html>

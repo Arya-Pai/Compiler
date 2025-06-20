@@ -24,18 +24,19 @@ public class CodeController {
 		
 	}
     @PostMapping("/compile")
-    public ResponseEntity<String> compileCode(@RequestParam String code, @RequestParam String languageSelect) {
+    public ResponseEntity<String> compileCode(@RequestParam String code, @RequestParam String languageSelect ,@RequestParam(required = false) String input) {
         RestTemplate restTemplate = new RestTemplate();
         String[] keys=secretKey();
         String url = "https://api.jdoodle.com/v1/execute";
         System.out.println("Code: " + code);
         System.out.println("Language: " + languageSelect);
-
+        
         Map<String, Object> request = new HashMap<>();
         request.put("clientId", keys[0]);
         request.put("clientSecret", keys[1]);
         request.put("script", code);
         request.put("language", languageSelect);
+        request.put("stdin", input == null ? "" : input);
         Map<String, String> versionMap = Map.of(
         		  "python3", "3",
         		  "java", "5",

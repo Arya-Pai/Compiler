@@ -1,7 +1,7 @@
 const codeTextarea = document.getElementById('code');
 const MIN_ROWS = 30;
-const MAX_ROWS = 70;
-const LINE_HEIGHT = 20;
+const MAX_ROWS=70;
+const LINE_HEIGHT = 30;
 
 const modeMap = {
     "python": "python",
@@ -33,9 +33,9 @@ var editor = CodeMirror.fromTextArea(codeTextarea, {
 
 function autoResizeEditor(editor) {
     const lineCount = editor.lineCount();
-    const clampedLines = Math.min(Math.max(lineCount, MIN_ROWS), MAX_ROWS);
+    const clampedLines = Math.max(Math.max(lineCount, MIN_ROWS), MAX_ROWS);
     const newHeight = clampedLines * LINE_HEIGHT;
-    editor.setSize(null, newHeight + "px");
+    editor.setSize(null, newHeight + "rem");
 }
 
 function detectAndSetLanguage() {
@@ -49,13 +49,13 @@ function detectAndSetLanguage() {
         editor.setOption("mode", cmMode);
 		langSelect.disabled=true;
         // Update UI labels
-       // document.getElementById("languageLabel").innerText = `Current Language: ${nameMap[detected]}`;
+       //document.getElementById("languageSelect").innerText = `Current Language: ${nameMap[detected]}`;
 
         // Optional: update dropdown
        
         if (langSelect) langSelect.value = cmMode;
 		langSelect.disabled=false;
-        // Optional: disable transpile if same as target
+    
         const targetSelect = document.getElementById("targetLanguageSelect");
         const transpileBtn = document.getElementById("transpileBtn");
         if (targetSelect && transpileBtn) {

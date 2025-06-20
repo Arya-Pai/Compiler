@@ -54,7 +54,7 @@
 
 			<div class="language-controls">
 				<label for="languageSelect">Current:</label> <select
-					id="languageSelect" disabled>
+					id="languageSelect" >
 					 <option value="java">Java</option>
   <option value="python3">Python 3</option>
   <option value="cpp">C++</option>
