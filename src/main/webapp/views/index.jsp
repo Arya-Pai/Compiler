@@ -99,8 +99,8 @@
 		</div>
 	</div>
 
-
 	<script src="/scripts/index.js"></script>
+	<script src="/scripts/common.js"></script>
 
 </body>
 </html>

@@ -81,6 +81,8 @@
 					<form id="transpileForm" action="/api/transpile" method="post"
 						style="display: inline;">
 						<input type="hidden" id="codeHiddenTranspile" name="code" />
+						<input type="hidden" id="languageHiddenTranspile" name="languageSelect" />
+						<input type="hidden" id="targetHiddenTranspile" name="targetLanguageSelect" />
 						<button type="submit" id="transpileBtn">Transpile</button>
 					</form>
 				</div>
@@ -103,7 +105,14 @@
 		</div>
 		
 </div>
-
+	<script>
+	document.getElementById("transpileForm").addEventListener("submit", function () {
+	    document.getElementById("codeHiddenTranspile").value = editor.getValue();
+	    document.getElementById("languageHiddenTranspile").value = document.getElementById("languageSelect").value;
+	    document.getElementById("targetHiddenTranspile").value = document.getElementById("targetLanguageSelect").value;
+		console.log(editor.getValue());
+	});
+	</script>
 	<script src="/scripts/index.js"></script>
 
 </body>
