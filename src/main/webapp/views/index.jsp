@@ -100,6 +100,11 @@
 			<label for="fileInput">Upload File:</label>
 				<input type="file" id="fileInput" accept=".txt,.java,.py,.cpp,.c,.js" />
 			</div>
+			<div id="uploadControls">
+			<button onclick="downloadPDF()">Download PDF</button>
+
+			</div>
+			
 		</div>
 	</div>
 

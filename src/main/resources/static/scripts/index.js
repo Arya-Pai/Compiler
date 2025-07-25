@@ -35,3 +35,33 @@ document.getElementById("compileForm").addEventListener("submit", async function
 	        document.getElementById('outputTerminal').innerText = "Error executing code.";
 	    }
 	});
+	
+	
+	async function downloadPDF() {
+	    const code = editor.getValue();
+	    const input = document.getElementById('inputText').value;
+	    const output = document.getElementById('outputTerminal').innerText;
+
+	    const formData = new URLSearchParams();
+	    formData.append("code", code);
+		if(input!="")formData.append("input", input);
+		else formData.append("input",null);
+	    
+	    formData.append("output", output);
+
+	    const response = await fetch("/api/download-pdf", {
+	        method: "POST",
+	        body: formData
+	    });
+
+	    if (response.ok) {
+	        const blob = await response.blob();
+	        const url = window.URL.createObjectURL(blob);
+	        const a = document.createElement('a');
+	        a.href = url;
+	        a.download = "result.pdf";
+	        a.click();
+	    } else {
+	        alert("Failed to generate PDF");
+	    }
+	}
