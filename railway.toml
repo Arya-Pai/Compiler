@@ -3,7 +3,7 @@ builder = "NIXPACKS"
 buildCommand = "./mvnw clean package -DskipTests"
 
 [deploy]
-startCommand = "java -jar target/*.jar"
+./mvnw spring-boot:run
 runtime = "V2"
 numReplicas = 1
 sleepApplication = false
