@@ -48,15 +48,15 @@ function detectAndSetLanguage() {
         const cmMode = modeMap[detected];
         editor.setOption("mode", cmMode);
 		langSelect.disabled=true;
-        // Update UI labels
+      
        //document.getElementById("languageSelect").innerText = `Current Language: ${nameMap[detected]}`;
 
-        // Optional: update dropdown
+  
        
         if (langSelect) langSelect.value = cmMode;
 		langSelect.disabled=false;
     
-        const targetSelect = document.getElementById("targetLanguageSelect");
+        var targetSelect = document.getElementById("targetLanguageSelect");
         const transpileBtn = document.getElementById("transpileBtn");
         if (targetSelect && transpileBtn) {
             transpileBtn.diabled = (cmMode === targetSelect.value);
@@ -72,6 +72,20 @@ editor.on("change", () => {
 });
 autoResizeEditor(editor);
 detectAndSetLanguage();
+
+
+
+const fileInput=document.getElementById("fileInput");
+fileInput.addEventListener('change',function(){
+	const file=this.files[0];
+	if(!file) return ;
+	const reader=new FileReader();
+	reader.onload=function(e){
+		const content=e.target.result;
+		editor.setValue(content);
+	}
+	reader.readAsText(file);
+});
 
 
 

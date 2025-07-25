@@ -3,6 +3,7 @@ package com.project.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,30 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api")
 public class CodeController {
-	private String[] secretKey() {
-		String[] keys=new String[2];
-		keys[0]="b8c8a6bc34a01222095f10aed2d2375";
-		keys[1]="6dc4a16f6e1691c3b02299c2d73e96a9ac7eebded875cb6b3824ea79bfdedbe2";
-		return keys;
-		
-	}
+	@Value("${joodle.api.key1}")
+	private String jdoodle_api_key1;
+	@Value("${joodle.api.key2}")
+	private String jdoodle_api_key2;
+	
+	
     @PostMapping("/compile")
     public ResponseEntity<Map<String, String>> compileCode(@RequestParam String code, @RequestParam String languageSelect ,@RequestParam(required = false) String input) {
         RestTemplate restTemplate = new RestTemplate();
-        String[] keys=secretKey();
+ 
         String url = "https://api.jdoodle.com/v1/execute";
         System.out.println("Code: " + code);
         System.out.println("Language: " + languageSelect);
         
         Map<String, Object> request = new HashMap<>();
-        request.put("clientId", keys[0]);
-        request.put("clientSecret", keys[1]);
+        request.put("clientId", jdoodle_api_key1);
+        request.put("clientSecret", jdoodle_api_key2);
         request.put("script", code);
         request.put("language", languageSelect);
         request.put("stdin", input == null ? "" : input);
@@ -65,4 +64,6 @@ public class CodeController {
             return ResponseEntity.ok(error);
         }
     }
+    
+    
 }

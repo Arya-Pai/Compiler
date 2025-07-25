@@ -14,6 +14,8 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
 	rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
 
 
 <link rel="stylesheet" href="/css/style.css">
@@ -101,19 +103,17 @@
 						<div id="outputTerminal">// output will show here</div>
 					</div>
 				</div>
+				<div id="uploadControls">
+				<label for="fileInput">Upload File:</label>
+				<input type="file" id="fileInput" accept=".txt,.java,.py,.cpp,.c,.js" />
+			</div>
 			</div>
 		</div>
 		
 </div>
-	<script>
-	document.getElementById("transpileForm").addEventListener("submit", function () {
-	    document.getElementById("codeHiddenTranspile").value = editor.getValue();
-	    document.getElementById("languageHiddenTranspile").value = document.getElementById("languageSelect").value;
-	    document.getElementById("targetHiddenTranspile").value = document.getElementById("targetLanguageSelect").value;
-		console.log(editor.getValue());
-	});
-	</script>
-	<script src="/scripts/index.js"></script>
+	
+	<script src="/scripts/common.js"></script>
+	<script src="/scripts/transpiler.js"></script>
 
 </body>
 </html>

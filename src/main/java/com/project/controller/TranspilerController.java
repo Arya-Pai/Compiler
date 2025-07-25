@@ -26,11 +26,11 @@ public class TranspilerController {
 
 
 	@PostMapping("/transpile")
-	public ResponseEntity<String> transpileCode(@RequestParam String code,@RequestParam("languageSelect") String source,@RequestParam("targetLanguageSelect") String target){
+	public ResponseEntity<Map<String, String>> transpileCode(@RequestParam String code,@RequestParam("languageSelect") String source,@RequestParam("targetLanguageSelect") String target){
 		String prompt = "Convert the following code written in " + source +
                 " to " + target + ". Only return the converted code. Do not include any explanation, comments, or additional text and convert the code according to the language and it need to be same.";
 
-		String system_prompt = "You are a strict code transpiler. Return only valid working code in the target language with correct syntax. Do not include explanations or extra comments.";
+		String system_prompt = "You are a strict code transpiler. Return only valid working code in the target language with correct syntax. Do not include explanations or extra comments.REMEMBER YOU ARE A TRANSPILER WHICH CONVERTS CODE FROM ONE LANGUAGE TO ANOTHER WHICH IS MENTIONED . DO NOT GIVE ANY EXPLANATIONS OR ANYTHING JUST CONVERT THE CODE";
 
 		
 		
@@ -45,10 +45,20 @@ public class TranspilerController {
 		System.out.println(source+" "+target);
 		
 		Map<String, Object> message = new HashMap<>();
-        message.put("role", "user");
-        message.put("parts", List.of(Map.of("text", system_prompt + "\n\n" + prompt)));
-        
-        Map<String, Object> body = Map.of("contents", List.of(message));
+		message.put("text", system_prompt + "\n\n" + prompt + "\n\n" + code);
+
+		Map<String, Object> content1 = new HashMap<>();
+		content1.put("parts", List.of(message));
+
+		Map<String, Object> generationConfig = new HashMap<>();
+		generationConfig.put("temperature", 0.2);
+		generationConfig.put("topK", 1);
+		generationConfig.put("topP", 1.0);
+		generationConfig.put("maxOutputTokens", 1024);
+
+		Map<String, Object> body = new HashMap<>();
+		body.put("contents", List.of(content1));
+		body.put("generationConfig", generationConfig);
 	
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, header);
 		try {
@@ -59,16 +69,25 @@ public class TranspilerController {
                 Map<String, Object> content = (Map<String, Object>) firstCandidate.get("content");
                 List<Map<String, Object>> parts = (List<Map<String, Object>>) content.get("parts");
                 String transpiledCode = (String) parts.get(0).get("text");
-
-                return ResponseEntity.ok(transpiledCode.trim());
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error from Gemini API: " + response.getStatusCode());
+                transpiledCode = transpiledCode
+                        .replaceAll("(?i)```[a-z]*", "")  // remove ```python, ```java etc.
+                        .replace("```", "")               // remove closing ```
+                        .trim();
+               
+                Map<String, String> result = new HashMap<>();
+                result.put("output", transpiledCode);
+   			 return ResponseEntity.ok(result);
+            }else {
+            	return null;
             }
-		}catch(Exception e) {
-			 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-		                .body("Error during transpilation: " + e.getMessage());
+			
+			 
+		}catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("output", "Error compiling code: " + e.getMessage());
+            return ResponseEntity.ok(error);
 		}
+	
 		
 		
 	}

@@ -96,6 +96,10 @@
 				<textarea id="inputText" rows="10" cols="50"
 					placeholder="Enter input here (if your code uses scanf, cin, or input())"></textarea>
 			</div>
+			<div id="uploadControls">
+			<label for="fileInput">Upload File:</label>
+				<input type="file" id="fileInput" accept=".txt,.java,.py,.cpp,.c,.js" />
+			</div>
 		</div>
 	</div>
 
